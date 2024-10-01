@@ -51,7 +51,7 @@ your preferred browser.
 
 The application routes are documented in the `postman_collection.json` file.
 ```sh
-head postman_collection.json # check the api documentation
+head postman_collection.json # check the routes documentation
 ```
 
 ## License
