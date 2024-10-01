@@ -21,6 +21,7 @@ def login():
     return UserController.login()    
 
 @user_bp.route('/logout', methods=(['DELETE']))
+@authenticate
 def logout():
     return UserController.logout()    
 
