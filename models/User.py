@@ -1,7 +1,11 @@
+from typing import List
+
 from sqlalchemy import Column, Integer, String, Enum, DateTime
 from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.ext.declarative import declarative_base
+
+from models import PersonalAccessToken 
 
 Base = declarative_base()
 
@@ -17,9 +21,9 @@ class User(Base):
     created_at = Column(DateTime, nullable=False, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
 
-    personal_access_tokens = relationship('PersonalAccessToken', backref='personal_access_tokens')
+    # personal_access_tokens:Mapped[List["PersonalAccessToken"]] = relationship(back_populates='users')
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:        
         return f"User(id={self.id!r}, name={self.name!r})"
 
     def to_json(self):
