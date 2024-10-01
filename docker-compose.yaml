@@ -1,0 +1,7 @@
+version: "3"
+services:
+    backend:
+        container_name: signtalk-flaskpython
+        build: .
+        ports:
+            - "5000:5000"
