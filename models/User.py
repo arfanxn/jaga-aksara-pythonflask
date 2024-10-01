@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum, DateTime
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -15,6 +16,8 @@ class User(Base):
     birth_date = Column(DateTime, nullable=False)
     created_at = Column(DateTime, nullable=False, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
+
+    personal_access_tokens = relationship('PersonalAccessToken', backref='personal_access_tokens')
 
     def __repr__(self) -> str:
         return f"User(id={self.id!r}, name={self.name!r})"
