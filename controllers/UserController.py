@@ -1,7 +1,7 @@
 from flask import (
     current_app, flash, g, redirect, request, url_for, jsonify
 )
-from forms import (RegisterForm, LoginForm, UpdateUserForm)
+from forms import (RegisterForm, LoginForm, UpdateUserForm, UpdateUserPasswordForm)
 from models import User
 from sqlalchemy.exc import IntegrityError
 from http import HTTPStatus
@@ -37,7 +37,7 @@ class UserController:
                     'message':message,
                     'status': HTTPStatus.UNPROCESSABLE_ENTITY}, HTTPStatus.UNPROCESSABLE_ENTITY
 
-        return {'message': 'User registered successfully.', 'status': HTTPStatus.OK}, HTTPStatus.OK
+        return {'message': 'User registered successfully.', 'status': HTTPStatus.CREATED}, HTTPStatus.CREATED
 
 
     def login():
@@ -102,8 +102,6 @@ class UserController:
                 user.name = form.name.data
         if form.email.data is not None:
             user.email = form.email.data
-        if form.password.data is not None:
-            user.password = bcrypt.hashpw(form.password.data.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         if form.gender.data is not None:
             user.gender = form.gender.data
         if form.birth_date.data is not None:
@@ -114,6 +112,31 @@ class UserController:
         return jsonify({
             'message': 'User updated successfully.',
             'data': {'user': user.to_json()},
+            'status': HTTPStatus.OK}), HTTPStatus.OK
+    
+    def update_password_self (): 
+        form = UpdateUserPasswordForm(request.form) 
+
+        if form.validate() == False: 
+            return {'errors': form.errors, 
+                    'message': list(form.errors.values())[0], 
+                    'status': HTTPStatus.UNPROCESSABLE_ENTITY}, HTTPStatus.UNPROCESSABLE_ENTITY
+        
+        db_session = db.get_session()
+        user = db_session.query(User).filter_by(id=g.user.id).first()
+
+        if bcrypt.checkpw(form.current_password.data.encode('utf-8'), user.password.encode('utf-8')) is False:
+            message = "The Credentials doesn't match our records." 
+            return {'errors':{'current_password': [message] }, 
+                    'message':message,
+                    'status': HTTPStatus.UNPROCESSABLE_ENTITY}, HTTPStatus.UNPROCESSABLE_ENTITY
+        
+        user.password = bcrypt.hashpw(form.password.data.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+        db_session.commit()
+
+        return jsonify({
+            'message': 'User password updated successfully.',
             'status': HTTPStatus.OK}), HTTPStatus.OK
 
     def show_self():

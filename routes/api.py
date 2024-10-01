@@ -41,3 +41,8 @@ def update(user_id: int):
 @authenticate
 def update_self():
     return UserController.update(user_id=g.user.id)
+
+@user_bp.route('/self/password', methods=(['PUT']))
+@authenticate
+def update_password_self():
+    return UserController.update_password_self()
