@@ -9,6 +9,15 @@ import jwt.exceptions
 import db
 
 def authenticate(f):
+    """
+    A decorator to authenticate the user before the decorated view function is invoked.
+    
+    The decorator expects that the request contains an "Authorization" header with
+    a Bearer token. The token is decoded and if it is invalid, a 401 Unauthorized
+    response is returned. If the token is valid, the user is retrieved from the database
+    using the user_id from the payload and the user is stored in the g object. The
+    decorated view function is then invoked with the original parameters.
+    """
     @wraps(f)
     def decorated(*args, **kwargs):
         unauthorized_response = {
