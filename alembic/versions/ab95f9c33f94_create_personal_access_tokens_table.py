@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table(
         'personal_access_tokens',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('user_id', sa.Integer, nullable=False),
+        sa.Column('user_id', sa.CHAR(36), nullable=False),
         sa.Column('name', sa.Enum('jwt', 'others'), nullable=False),
         sa.Column('secret', sa.String(255), nullable=False),
         sa.Column('redirect', sa.String(255), nullable=True),
@@ -31,7 +31,7 @@ def upgrade() -> None:
         sa.Column('created_at', sa.DateTime, nullable=False, default=func.now()),
         sa.Column('updated_at', sa.DateTime),
     )    
-    op.create_foreign_key('user_id', 'personal_access_tokens', 'users', ['user_id'], ['id'], ondelete='CASCADE', onupdate='CASCADE')
+    op.create_foreign_key('user_id_1', 'personal_access_tokens', 'users', ['user_id'], ['id'], ondelete='CASCADE', onupdate='CASCADE')
     pass
 
 

@@ -1,6 +1,6 @@
 from typing import List
 
-from sqlalchemy import Column, Integer, String, Enum, DateTime
+from sqlalchemy import Column, Integer, String, Enum, DateTime, CHAR
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, Mapped, mapped_column
 from sqlalchemy.ext.declarative import declarative_base
@@ -12,11 +12,12 @@ Base = declarative_base()
 class User(Base): 
     __tablename__ = "users"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(CHAR(36), primary_key=True)
+    country_code = Column(Integer, nullable=False)
     name = Column(String(50), nullable=False)
-    email = Column(String(25), unique=True, nullable=False)
-    password = Column(String(255), nullable=False)
-    gender = Column(Enum('male', 'female', 'non-binary'), nullable=False)
+    phone = Column(String(16), unique=True, nullable=False)
+    gender = Column(Enum('male', 'female'), nullable=False)
+    level = Column(Enum('standard', 'admin'), nullable=False)
     birth_date = Column(DateTime, nullable=False)
     created_at = Column(DateTime, nullable=False, default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
@@ -29,9 +30,11 @@ class User(Base):
     def to_json(self):
         return {    
             "id": self.id,
+            "country_code" : self.country_code,
             "name": self.name,
-            "email": self.email,    
+            "phone": self.phone,    
             "gender": self.gender,
+            "level": self.level,
             "birth_date": self.birth_date.isoformat(),
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat() if self.updated_at is not None else None
