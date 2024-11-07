@@ -23,7 +23,7 @@ def upgrade() -> None:
         'otps',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('user_id', sa.CHAR(36), nullable=False),
-        sa.Column('code', sa.SMALLINT, nullable=False), 
+        sa.Column('code', sa.Integer, nullable=False), 
         sa.Column('status', sa.Enum('available', 'used'), nullable=False, default='active'),
         sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime),
