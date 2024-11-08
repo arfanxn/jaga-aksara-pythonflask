@@ -1,5 +1,5 @@
 from flask import (Blueprint, g)
-from controllers import UserController
+from controllers import (UserController, PegonScriptController)
 from middlewares.auth_middleware import authenticate
 from models import User
 
@@ -9,7 +9,9 @@ api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 # Additional blueprint(s)
 user_bp = Blueprint('user', __name__, url_prefix='/users')
+pegon_script_bp = Blueprint('pegon_script', __name__, url_prefix='/pegon-scripts')
 api_bp.register_blueprint(user_bp)
+api_bp.register_blueprint(pegon_script_bp)
 
 
 @user_bp.route('/register', methods=(['POST']))
@@ -46,3 +48,7 @@ def update_self():
 @authenticate
 def update_password_self():
     return UserController.update_password_self()
+
+@pegon_script_bp.route('/translate', methods=(['POST']))
+def pegon_script_translate():
+    return PegonScriptController.translate()
