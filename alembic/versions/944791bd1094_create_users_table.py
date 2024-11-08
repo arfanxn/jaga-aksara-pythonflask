@@ -26,7 +26,7 @@ def upgrade() -> None:
         sa.Column('country_code', sa.Integer, nullable=False),
         sa.Column('name', sa.String(50), nullable=False),
         sa.Column('phone', sa.String(16), unique=True, nullable=False),
-        sa.Column('gender', sa.Enum('male', 'female'), nullable=False),
+        sa.Column('sex', sa.Enum('male', 'female'), nullable=False),
         sa.Column('level', sa.Enum('standard', 'admin'), nullable=False),
         sa.Column('birth_date', sa.DateTime, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, default=func.now()),

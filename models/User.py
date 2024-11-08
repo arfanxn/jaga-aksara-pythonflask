@@ -16,7 +16,7 @@ class User(Base):
     country_code = Column(Integer, nullable=False)
     name = Column(String(50), nullable=False)
     phone = Column(String(16), unique=True, nullable=False)
-    gender = Column(Enum('male', 'female'), nullable=False)
+    sex = Column(Enum('male', 'female'), nullable=False)
     level = Column(Enum('standard', 'admin'), nullable=False)
     birth_date = Column(DateTime, nullable=False)
     created_at = Column(DateTime, nullable=False, default=func.now())
@@ -33,7 +33,7 @@ class User(Base):
             "country_code" : self.country_code,
             "name": self.name,
             "phone": self.phone,    
-            "gender": self.gender,
+            "sex": self.sex,
             "level": self.level,
             "birth_date": self.birth_date.isoformat(),
             "created_at": self.created_at.isoformat(),
