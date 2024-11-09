@@ -1,7 +1,7 @@
 from flask import (
-    request
+    request, g
 )
-from forms import (RegisterForm, LoginForm)
+from forms import (RegisterForm, LoginForm, UpdateUserForm)
 from utilities.form_helpers import get_error_message
 from models import User, Otp
 from enums import UserLevelEnum
@@ -62,5 +62,32 @@ class UserController:
             commit()
             
             return {'country_code': user.country_code, 'phone': user.phone}, HTTPStatus.CREATED
-        
+
+
+    def self ():
+        """
+        Retrieves the information of the authenticated user.
+
+        Returns:
+            tuple: A dictionary containing the user's information in JSON format 
+                and an HTTP status code indicating success.
+        """
+        return {g.user.to_json()}, HTTPStatus.OK
     
+    def update(user_id: int):
+        form = UpdateUserForm(request.form) 
+
+        if form.validate() == False: 
+            return {'message': get_error_message(form)}, HTTPStatus.BAD_REQUEST
+        
+        with db_session:
+            user = User.get(id=user_id) 
+
+            if user is None:
+                return {'message': 'Data not found.'}, HTTPStatus.NOT_FOUND
+
+            user.name = form.name.data if form.name.data is not None else user.name
+            user.sex = form.sex.data if form.sex.data is not None else user.sex
+            user.birth_date = form.birth_date.data if form.birth_date.data is not None else user.birth_date
+
+            return user.to_json(), HTTPStatus.OK

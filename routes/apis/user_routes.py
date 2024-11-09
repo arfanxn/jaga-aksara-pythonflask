@@ -21,21 +21,17 @@ def logout():
 
 @user_bp.route('/self', methods=(['GET']))
 @authenticate
-def show_self():
-    return UserController.show_self()
+def self():
+    return UserController.self()
 
 
-@user_bp.route('/<int:user_id>', methods=(['PUT']))
+@user_bp.route('/<int:user_id>', methods=(['PATCH']))
 @authenticate
 def update(user_id: int):
     return UserController.update(user_id)
 
-@user_bp.route('/self', methods=(['PUT']))
+@user_bp.route('/self', methods=(['PATCH']))
 @authenticate
 def update_self():
     return UserController.update(user_id=g.user.id)
 
-@user_bp.route('/self/password', methods=(['PUT']))
-@authenticate
-def update_password_self():
-    return UserController.update_password_self()

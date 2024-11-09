@@ -1,14 +1,12 @@
-from wtforms import Form, StringField, PasswordField, DateTimeField, SelectField, validators
+from wtforms import Form, StringField, DateField, SelectField, validators
+from enums import UserSexEnum
 
-genders = [
-    ('female', 'female'),
-    ('male', 'male'),
-    ('non-binary', 'non-binary')
+sexes = [
+    (UserSexEnum.FEMALE.value, UserSexEnum.FEMALE.value),
+    (UserSexEnum.MALE.value, UserSexEnum.MALE.value),
 ]
 
 class UpdateUserForm(Form):
-    name = StringField('Name', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    email = StringField('Email', [validators.DataRequired(), validators.Length(min=6, max=25), validators.Email()])
-    gender = SelectField('Gender', [validators.DataRequired()], choices=genders)
-    birth_date = DateTimeField('Birth Date', [validators.DataRequired()], format='%d-%m-%Y')
-
+    name = StringField('Name', validators=[validators.Length(min=2, max=50)])
+    sex = SelectField('Sex', validators=[], choices=sexes)
+    birth_date = DateField('Birth Date', validators=[], format='%Y-%m-%d') 
