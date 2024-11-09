@@ -72,7 +72,7 @@ class UserController:
             tuple: A dictionary containing the user's information in JSON format 
                 and an HTTP status code indicating success.
         """
-        return {g.user.to_json()}, HTTPStatus.OK
+        return g.user.to_json(), HTTPStatus.OK
     
     def update(user_id: int):
         form = UpdateUserForm(request.form) 
