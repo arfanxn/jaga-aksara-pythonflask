@@ -1,20 +1,15 @@
-from wtforms import Form, StringField, PasswordField, DateTimeField, SelectField, validators
+from wtforms import Form, StringField, IntegerField, DateField, SelectField, validators
+from enums import UserSexEnum
 
-genders = [
-    ('female', 'female'),
-    ('male', 'male'),
-    ('non-binary', 'non-binary')
+sexes = [
+    (UserSexEnum.FEMALE.value, UserSexEnum.FEMALE.value),
+    (UserSexEnum.MALE.value, UserSexEnum.MALE.value),
 ]
 
 class RegisterForm(Form):
+    country_code = IntegerField('Country Code', [validators.DataRequired()])
+    phone = StringField('Phone', [validators.DataRequired(), validators.Length(min=2, max=16)])
     name = StringField('Name', [validators.DataRequired(), validators.Length(min=2, max=50)])
-    email = StringField('Email', [validators.DataRequired(), validators.Length(min=6, max=25), validators.Email()])
-    password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.Length(min=8),
-        validators.EqualTo('password_confirmation')
-    ])
-    password_confirmation = PasswordField('Password Confirmation', [validators.DataRequired()])
-    gender = SelectField('Gender', [validators.DataRequired()], choices=genders)
-    birth_date = DateTimeField('Birth Date', [validators.DataRequired()], format='%d-%m-%Y')
+    sex = SelectField('Sex', [validators.DataRequired()], choices=sexes)
+    birth_date = DateField('Birth Date', [validators.DataRequired()], format='%Y-%m-%d')
 
