@@ -10,6 +10,8 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 
+from enums import OtpStatusEnum
+
 
 # revision identifiers, used by Alembic.
 revision: str = '75fd08ca5c29'
@@ -24,7 +26,7 @@ def upgrade() -> None:
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('user_id', sa.CHAR(36), nullable=False),
         sa.Column('code', sa.Integer, nullable=False), 
-        sa.Column('status', sa.Enum('available', 'used'), nullable=False, default='active'),
+        sa.Column('status', sa.Enum(OtpStatusEnum.AVAILABLE.value, OtpStatusEnum.USED.value), nullable=False, default='active'),
         sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
         sa.Column('updated_at', sa.DateTime),
     )    

@@ -11,6 +11,8 @@ from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.sql import func
 
+from enums import UserLevelEnum
+
 
 # revision identifiers, used by Alembic.
 revision: str = '944791bd1094'
@@ -27,8 +29,8 @@ def upgrade() -> None:
         sa.Column('name', sa.String(50), nullable=False),
         sa.Column('phone', sa.String(16), unique=True, nullable=False),
         sa.Column('sex', sa.Enum('male', 'female'), nullable=False),
-        sa.Column('level', sa.Enum('standard', 'admin'), nullable=False),
-        sa.Column('birth_date', sa.DateTime, nullable=False),
+        sa.Column('level', sa.Enum(UserLevelEnum.STANDARD.value, UserLevelEnum.ADMIN.value), nullable=False),
+        sa.Column('birth_date', sa.Date, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False, default=func.now()),
         sa.Column('updated_at', sa.DateTime),
     )
