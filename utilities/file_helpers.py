@@ -29,3 +29,15 @@ def image_to_webp (input_image_path, output_image_path, quality=80, lossless=Fal
     """
     with Image.open(input_image_path) as img:
         img.save(output_image_path, format='WEBP', quality=quality, lossless=lossless, **params)
+
+def file_exists(filepath) -> bool :
+    """
+    Check if a file exists at the specified path.
+
+    Parameters:
+    filepath (str): The path to the file.
+
+    Returns:
+    bool: True if the file exists, False otherwise.
+    """
+    return os.path.isfile(filepath)
