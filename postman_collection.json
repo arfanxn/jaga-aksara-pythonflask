@@ -21,33 +21,28 @@
 									"mode": "formdata",
 									"formdata": [
 										{
+											"key": "country_code",
+											"value": "62",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "88877779999",
+											"type": "text"
+										},
+										{
 											"key": "name",
 											"value": "Arfan",
 											"type": "text"
 										},
 										{
-											"key": "email",
-											"value": "arfan@gm.com",
-											"type": "text"
-										},
-										{
-											"key": "password",
-											"value": "11112222",
-											"type": "text"
-										},
-										{
-											"key": "password_confirmation",
-											"value": "11112222",
-											"type": "text"
-										},
-										{
-											"key": "gender",
+											"key": "sex",
 											"value": "female",
 											"type": "text"
 										},
 										{
 											"key": "birth_date",
-											"value": "21-07-2003",
+											"value": "2000-12-30",
 											"type": "text"
 										}
 									]
@@ -75,21 +70,14 @@
 									"mode": "formdata",
 									"formdata": [
 										{
-											"key": "email",
-											"value": "arfan@gm.com",
+											"key": "country_code",
+											"value": "62",
 											"type": "text"
 										},
 										{
-											"key": "password",
-											"value": "11112222",
+											"key": "phone",
+											"value": "88877779999",
 											"type": "text"
-										},
-										{
-											"key": "remember",
-											"value": "0",
-											"description": "Set \"0\" or \"1\" to determines whether to remember the token or nah",
-											"type": "text",
-											"disabled": true
 										}
 									]
 								},
@@ -130,7 +118,13 @@
 							"name": "Show Self",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "app-version",
+										"value": "2",
+										"type": "text"
+									}
+								],
 								"url": {
 									"raw": "{{BASE_URL}}/api/users/self",
 									"host": [
@@ -148,7 +142,7 @@
 						{
 							"name": "Update",
 							"request": {
-								"method": "PUT",
+								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "formdata",
@@ -159,18 +153,13 @@
 											"type": "text"
 										},
 										{
-											"key": "email",
-											"value": "arfan@gm.com",
-											"type": "text"
-										},
-										{
-											"key": "gender",
-											"value": "male",
+											"key": "sex",
+											"value": "female",
 											"type": "text"
 										},
 										{
 											"key": "birth_date",
-											"value": "21-07-2003",
+											"value": "2003-07-21",
 											"type": "text"
 										}
 									]
@@ -192,7 +181,7 @@
 						{
 							"name": "Update Self",
 							"request": {
-								"method": "PUT",
+								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "urlencoded",
@@ -203,18 +192,13 @@
 											"type": "text"
 										},
 										{
-											"key": "email",
-											"value": "arfan@gm.com",
-											"type": "text"
-										},
-										{
-											"key": "gender",
-											"value": "male",
+											"key": "sex",
+											"value": "female",
 											"type": "text"
 										},
 										{
 											"key": "birth_date",
-											"value": "21-07-2003",
+											"value": "2003-07-21",
 											"type": "text"
 										}
 									]
@@ -232,42 +216,80 @@
 								}
 							},
 							"response": []
-						},
+						}
+					]
+				},
+				{
+					"name": "Otps",
+					"item": [
 						{
-							"name": "Update Password Self",
+							"name": "Validate",
 							"request": {
-								"method": "PUT",
+								"method": "POST",
 								"header": [],
 								"body": {
-									"mode": "urlencoded",
-									"urlencoded": [
+									"mode": "formdata",
+									"formdata": [
 										{
-											"key": "current_password",
-											"value": "11112222",
+											"key": "country_code",
+											"value": "62",
 											"type": "text"
 										},
 										{
-											"key": "password",
-											"value": "11112222",
+											"key": "phone",
+											"value": "88877779999",
 											"type": "text"
 										},
 										{
-											"key": "password_confirmation",
-											"value": "11112222",
+											"key": "code",
+											"value": "230484",
 											"type": "text"
 										}
 									]
 								},
 								"url": {
-									"raw": "{{BASE_URL}}/api/users/self/password",
+									"raw": "{{BASE_URL}}/api/otps/validate",
 									"host": [
 										"{{BASE_URL}}"
 									],
 									"path": [
 										"api",
-										"users",
-										"self",
-										"password"
+										"otps",
+										"validate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Resend",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "country_code",
+											"value": "62",
+											"type": "text"
+										},
+										{
+											"key": "phone",
+											"value": "88877779999",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/otps/resend",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"otps",
+										"resend"
 									]
 								}
 							},
@@ -308,6 +330,350 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Articles",
+					"item": [
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Lorem Ipsum",
+											"type": "text"
+										},
+										{
+											"key": "thumbnail",
+											"type": "file",
+											"src": "postman-cloud:///1ef9e994-4bc2-42e0-9486-3cada182c745"
+										},
+										{
+											"key": "content",
+											"type": "file",
+											"src": "postman-cloud:///1ef9e995-47fc-47e0-bab2-6b34d750b714"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download Thumbnail",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles/thumbnail?file=1134e2eafef003b36f36b49d5d0516f0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles",
+										"thumbnail"
+									],
+									"query": [
+										{
+											"key": "file",
+											"value": "1134e2eafef003b36f36b49d5d0516f0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles?id=2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Index",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles?popular",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles"
+									],
+									"query": [
+										{
+											"key": "popular",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download Content",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles/content?file=808e472f403d72d2da2b4fc7ca04db0b",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles",
+										"content"
+									],
+									"query": [
+										{
+											"key": "file",
+											"value": "808e472f403d72d2da2b4fc7ca04db0b"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transliterations",
+					"item": [
+						{
+							"name": "Transliterate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "photo",
+											"type": "file",
+											"src": "postman-cloud:///1ef9e994-4bc2-42e0-9486-3cada182c745"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/transliterations/transliterate",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"transliterations",
+										"transliterate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/transliterations?id=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"transliterations"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "History",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/transliterations/history",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"transliterations",
+										"history"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Download Photo",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/articles/thumbnail?file=66fc842da6087f204e6a4b72d32033f4",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"articles",
+										"thumbnail"
+									],
+									"query": [
+										{
+											"key": "file",
+											"value": "66fc842da6087f204e6a4b72d32033f4"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Chats",
+					"item": [
+						{
+							"name": "Store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "question",
+											"value": "Lorem ipsum dolor sit amet.",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/chats",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"chats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "History",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/chats/history",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"chats",
+										"history"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			],
 			"auth": {
@@ -315,7 +681,7 @@
 				"bearer": [
 					{
 						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.aeXRufabRUjNkkoJKKfxMxSTke7cqAMVf0QYrCYCGtg",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZjMTE3OTViLWVlNWYtNGFlNC05NjMzLTdlMzU5ZjIwZTQ4OCIsInVzZXJfaWQiOiI2YzExNzk1Yi1lZTVmLTRhZTQtOTYzMy03ZTM1OWYyMGU0ODgiLCJsZXZlbCI6InN0YW5kYXJkIn0.PhWAlSBrMgNmFszHWcmJ3a406is6-_zb-G1YAfAeLPY",
 						"type": "string"
 					}
 				]
@@ -355,6 +721,29 @@
 							"raw": "{{BASE_URL}}",
 							"host": [
 								"{{BASE_URL}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Seed Database",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/systems/seed-database",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"systems",
+								"seed-database"
 							]
 						}
 					},
