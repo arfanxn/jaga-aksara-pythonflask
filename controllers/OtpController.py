@@ -46,7 +46,7 @@ class OtpController:
 
             return {'token' : token}, HTTPStatus.OK
 
-    async def resend():
+    def resend():
         form = LoginForm(request.form) 
 
         if form.validate() == False: 
@@ -65,10 +65,14 @@ class OtpController:
             otp = Otp(user=user)
             commit()
             
-            fire_get_and_forget('http://127.0.0.1:1010', {
+            try: 
+                fire_get_and_forget('http://127.0.0.1:1010', {
                 'country_code': user.country_code,
                 'phone': user.phone
-            })
+                })
+            except Exception as e: # * silent the error
+                print(e)
+                pass
             
             return {'country_code': user.country_code, 'phone': user.phone}, HTTPStatus.CREATED
         

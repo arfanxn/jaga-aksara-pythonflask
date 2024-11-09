@@ -9,3 +9,7 @@ otp_bp = Blueprint('otp', __name__, url_prefix='/otps')
 @otp_bp.route('/validate', methods=(['POST']))
 def validate():
     return OtpController.validate()
+
+@otp_bp.route('/resend', methods=(['POST']))
+def resend():
+    return OtpController.resend()
