@@ -1,32 +1,26 @@
-from typing import List
+from pony.orm import PrimaryKey, Required, Optional, Set
+from db import get_db
+from datetime import datetime, date, time
+from enums import UserSexEnum, UserLevelEnum
+from models import Otp
+import uuid
 
-from sqlalchemy import Column, Integer, String, Enum, DateTime, CHAR
-from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship, Mapped, mapped_column
-from sqlalchemy.ext.declarative import declarative_base
 
-from models import PersonalAccessToken 
+class User(get_db().Entity):
+    _table_ = 'users'
 
-Base = declarative_base()
+    id = PrimaryKey(str, default=lambda: str(uuid.uuid4()))  
+    country_code = Required(int)
+    phone = Required(str, unique=True)
+    name = Required(str)
+    sex = Required(str) # use the UserSexEnum.MALE.value, UserSexEnum.FEMALE.values
+    level = Required(str) # use the UserLevelEnum.STANDARD.value, UserLevelEnum.ADMIN.value
+    birth_date = Required(date)
+    created_at = Required(datetime, default=datetime.now)
+    updated_at = Optional(datetime)
 
-class User(Base): 
-    __tablename__ = "users"
-
-    id = Column(CHAR(36), primary_key=True)
-    country_code = Column(Integer, nullable=False)
-    name = Column(String(50), nullable=False)
-    phone = Column(String(16), unique=True, nullable=False)
-    sex = Column(Enum('male', 'female'), nullable=False)
-    level = Column(Enum('standard', 'admin'), nullable=False)
-    birth_date = Column(DateTime, nullable=False)
-    created_at = Column(DateTime, nullable=False, default=func.now())
-    updated_at = Column(DateTime, onupdate=func.now())
-
-    # personal_access_tokens:Mapped[List["PersonalAccessToken"]] = relationship(back_populates='users')
-
-    def __repr__(self) -> str:        
-        return f"User(id={self.id!r}, name={self.name!r})"
-
+    otps = Set('Otp')  # user has many otps
+    
     def to_json(self):
         return {    
             "id": self.id,
