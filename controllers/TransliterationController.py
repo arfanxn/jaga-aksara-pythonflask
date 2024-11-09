@@ -26,6 +26,7 @@ class TransliterationController:
         )
 
         # TODO: implements transliteration with AI model
+        transliteration_result = None
         try: 
             transliteration_result = 'Lorem ipsum dolor sit amet.'
         except Exception as e:

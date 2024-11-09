@@ -5,4 +5,5 @@ from .UpdateUserPasswordForm import UpdateUserPasswordForm
 from .OtpValidateForm import OtpValidateForm
 from .StoreArticleForm import StoreArticleForm
 from .TransliterateForm import TransliterateForm
+from .StoreChatForm import StoreChatForm
 from .PegonScriptImageForm import PegonScriptImageForm

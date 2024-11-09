@@ -22,6 +22,7 @@ class User(get_db().Entity):
     otps = Set('Otp')  # user has many otps
     articles = Set('Article')  # user has many articles
     transliterations = Set('Transliteration')  # user has many transliterations
+    chats = Set('Chat')  # user has many chats
     
     def to_json(self):
         return {    
