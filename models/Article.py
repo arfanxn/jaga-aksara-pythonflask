@@ -18,7 +18,7 @@ class Article(get_db().Entity):
     created_at = Required(datetime, default=datetime.now)
     updated_at = Optional(datetime)
 
-    user = Required(User, column='user_id')  # Article has many otps
+    user = Required(User, column='user_id') # article belongs to user
     
     def to_json(self):
         return {    
