@@ -22,7 +22,6 @@ def upgrade() -> None:
     op.create_table(
         'updates',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('user_id', sa.CHAR(36), nullable=False),
         sa.Column('version', sa.Integer, nullable=False), 
         sa.Column('note', sa.TEXT, nullable=False), 
         sa.Column('created_at', sa.DateTime, nullable=False, default=sa.func.now()),
