@@ -20,6 +20,7 @@ class User(get_db().Entity):
     updated_at = Optional(datetime)
 
     otps = Set('Otp')  # user has many otps
+    articles = Set('Article')  # user has many articles
     
     def to_json(self):
         return {    
