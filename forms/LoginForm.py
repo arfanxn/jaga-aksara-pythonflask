@@ -1,11 +1,5 @@
-from wtforms import Form, StringField, PasswordField, DateTimeField, SelectField, validators
-
-genders = [
-    ('female', 'female'),
-    ('male', 'male'),
-    ('non-binary', 'non-binary')
-]
+from wtforms import Form, StringField, IntegerField, validators
 
 class LoginForm(Form):
-    email = StringField('Email', [validators.DataRequired(), validators.Length(min=6, max=25), validators.Email()])
-    password = PasswordField('Password', [validators.DataRequired(), validators.Length(min=8)])
+    country_code = IntegerField('Country Code', [validators.DataRequired()])
+    phone = StringField('Phone', [validators.DataRequired(), validators.Length(min=2, max=16)])

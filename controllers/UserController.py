@@ -1,7 +1,7 @@
 from flask import (
     request
 )
-from forms import (RegisterForm)
+from forms import (RegisterForm, LoginForm)
 from utilities.form_helpers import get_error_message
 from models import User, Otp
 from enums import UserLevelEnum
@@ -41,3 +41,26 @@ class UserController:
                 message = 'The given phone number is already registered.'
                 status = HTTPStatus.CONFLICT
                 return {'message': message, 'status': status}, status
+
+    def login():
+        form = LoginForm(request.form) 
+
+        if form.validate() == False: 
+            message = get_error_message(form)
+            status = HTTPStatus.BAD_REQUEST
+            return {'message': message, 'status': status}, status
+        
+        with db_session:
+            user = User.get(lambda u: (u.country_code == form.country_code.data) and (u.phone == form.phone.data))
+
+            if user is None: 
+                message = 'The given phone number is not registered.'
+                status = HTTPStatus.NOT_FOUND
+                return {'message': message, 'status': status}, status
+            
+            otp = Otp(user=user)
+            commit()
+            
+            return {'country_code': user.country_code, 'phone': user.phone}, HTTPStatus.CREATED
+        
+    
