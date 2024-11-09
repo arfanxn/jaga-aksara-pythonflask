@@ -9,6 +9,27 @@ import jwt
 import jwt.exceptions
 import db
 
+def authenticate_decorated(*args, **kwargs):
+    unauthorized_response = {
+            "message": "Unauthorized action.",
+            # "status": HTTPStatus.UNAUTHORIZED
+        }, HTTPStatus.UNAUTHORIZED
+
+    if "Authorization" not in request.headers:
+        return unauthorized_response
+    token = request.headers["Authorization"].split(" ")[1]
+    try: 
+        payload = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+    except jwt.exceptions.InvalidTokenError:
+        return unauthorized_response
+        
+    with db_session:
+        user = User.get(lambda u: u.id == payload["user_id"])
+        if user is None:
+            return unauthorized_response
+        
+        g.user = user
+
 def authenticate(f):
     """
     A decorator to authenticate the user before the decorated view function is invoked.
@@ -21,26 +42,7 @@ def authenticate(f):
     """
     @wraps(f)
     def decorated(*args, **kwargs):
-        unauthorized_response = {
-                "message": "Unauthorized action.",
-                # "status": HTTPStatus.UNAUTHORIZED
-            }, HTTPStatus.UNAUTHORIZED
-
-        if "Authorization" not in request.headers:
-            return unauthorized_response
-        token = request.headers["Authorization"].split(" ")[1]
-        try: 
-            payload = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
-        except jwt.exceptions.InvalidTokenError:
-            return unauthorized_response
-            
-        with db_session:
-            user = User.get(lambda u: u.id == payload["user_id"])
-            if user is None:
-                return unauthorized_response
-            
-            g.user = user
-
-        return f(*args, **kwargs)
+        response = authenticate_decorated(*args, **kwargs)
+        return response if response is not None else f(*args, **kwargs)
 
     return decorated
