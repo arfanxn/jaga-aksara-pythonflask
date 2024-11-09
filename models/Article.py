@@ -16,7 +16,7 @@ class Article(get_db().Entity):
     created_at = Required(datetime, default=datetime.now)
     updated_at = Optional(datetime)
 
-    user = Required('User', column='user_id') # article belongs to user
+    author = Required('User', column='user_id') # article belongs to author (user)
     
     def to_json(self):
         return {    
@@ -27,5 +27,8 @@ class Article(get_db().Entity):
             "impression": self.impression,
             "view_time": self.view_time,
             "created_at": self.created_at.isoformat(),
-            "updated_at": self.updated_at.isoformat() if self.updated_at is not None else None
+            "updated_at": self.updated_at.isoformat() if self.updated_at is not None else None,
+
+            "author": self.author.to_json(),
+            "author_name" : self.author.name 
         }
