@@ -1,9 +1,7 @@
-from pony.orm import PrimaryKey, Required, Optional, Set
+from pony.orm import PrimaryKey, Required, Optional
 from db import get_db
-from datetime import datetime, date, time
-from enums import ArticleSexEnum, ArticleLevelEnum
+from datetime import datetime
 from models import User
-import uuid
 
 
 class Article(get_db().Entity):
