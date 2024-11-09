@@ -6,6 +6,7 @@ db = get_db()
 from .User import User
 from .Otp import Otp
 from .Article import Article
+from .Transliteration import Transliteration
 from .PersonalAccessToken import PersonalAccessToken
 
 config.inject_into_db(db)
