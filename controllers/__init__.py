@@ -1,4 +1,5 @@
 from .ArticleController import ArticleController
 from .UserController import UserController
 from .OtpController import OtpController
+from .TransliterationController import TransliterationController
 from .PegonScriptController import PegonScriptController

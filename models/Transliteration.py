@@ -26,5 +26,4 @@ class Transliteration(get_db().Entity):
             "updated_at": self.updated_at.isoformat() if self.updated_at is not None else None,
 
             "user": self.user.to_json(),
-            "user_name" : self.user.name 
         }

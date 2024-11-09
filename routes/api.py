@@ -3,6 +3,7 @@ from controllers import (PegonScriptController)
 from routes.apis.user_routes import user_bp
 from routes.apis.otp_routes import otp_bp
 from routes.apis.article_routes import article_bp
+from routes.apis.transliteration_routes import transliteration_bp
 
 
 # Main blueprint
@@ -13,6 +14,7 @@ pegon_script_bp = Blueprint('pegon_script', __name__, url_prefix='/pegon-scripts
 api_bp.register_blueprint(user_bp)
 api_bp.register_blueprint(otp_bp)
 api_bp.register_blueprint(article_bp)
+api_bp.register_blueprint(transliteration_bp)
 api_bp.register_blueprint(pegon_script_bp)
 
 

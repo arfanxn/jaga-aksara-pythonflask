@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 
-class StoreTransliterationForm(FlaskForm):
+class TransliterateForm(FlaskForm):
     class Meta:
         csrf = False
 
