@@ -11,12 +11,12 @@ class Article(get_db().Entity):
     title = Required(str)
     thumbnail = Required(str)
     content = Required(str) 
-    impression = Required(int) 
-    view_time = Required(int) 
+    impression = Required(int, default=0) 
+    view_time = Required(int, default=0) 
     created_at = Required(datetime, default=datetime.now)
     updated_at = Optional(datetime)
 
-    user = Required(User, column='user_id') # article belongs to user
+    user = Required('User', column='user_id') # article belongs to user
     
     def to_json(self):
         return {    
