@@ -1,5 +1,5 @@
 from flask import (Blueprint, g)
-from controllers import (UserController)
+from controllers.apis import (UserController)
 from middlewares.authentication_middleware import authenticate
 from middlewares.app_version_middleware import check_app_version
 

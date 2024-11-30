@@ -1,5 +1,5 @@
 from flask import (Blueprint, g, request)
-from controllers import (TransliterationController)
+from controllers.apis import (TransliterationController)
 from middlewares.authentication_middleware import authenticate
 from middlewares.app_version_middleware import check_app_version
 

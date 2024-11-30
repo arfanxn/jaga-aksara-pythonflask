@@ -1,5 +1,5 @@
 from flask import (Blueprint, g, request)
-from controllers import (ArticleController)
+from controllers.apis import (ArticleController)
 from enums import UserLevelEnum
 from middlewares.app_version_middleware import check_app_version
 from middlewares.authentication_middleware import authenticate
