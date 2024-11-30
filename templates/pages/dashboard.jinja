@@ -1,11 +1,18 @@
-{% extends "layouts/layout.html" %} {% block title %}Index{% endblock %} {%
-block head %} {{ super() }}
+{% extends "layouts/layout.jinja" %}
+<!--  -->
+{% block title %}Index{% endblock %}
+<!--  -->
+{% block head %} {{ super() }}
 <style type="text/css">
 	.important {
 		color: #336699;
 	}
 </style>
-{% endblock %} {% block content %}
+{% endblock %}
+
+<!--  -->
+
+{% block content %}
 <h1 class="text-2xl text-teal-500 font-extrabold">Index</h1>
 <p class="important">Welcome on my awesome homepage.</p>
 {% endblock %}
