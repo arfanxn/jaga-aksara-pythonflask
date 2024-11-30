@@ -6,7 +6,7 @@ from utilities.form_helpers import get_error_message
 from models import User, Otp
 from enums import UserLevelEnum
 from http import HTTPStatus
-from pony.orm import db_session, commit, IntegrityError
+from pony.orm import db_session, commit, IntegrityError, TransactionIntegrityError
 from datetime import datetime
 import uuid
 
@@ -37,7 +37,7 @@ class UserController:
                 commit()
 
                 return user.to_json(), HTTPStatus.CREATED
-            except IntegrityError as e:
+            except (IntegrityError, TransactionIntegrityError) as e:
                 message = 'The given phone number is already registered.'
                 status = HTTPStatus.CONFLICT
                 return {'message': message, 'status': status}, status
