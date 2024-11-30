@@ -11,7 +11,7 @@ def check_app_version_decorated(*args, **kwargs):
             'message': 'Request is not acceptable due to mismatch app-version.',
         }, HTTPStatus.NOT_ACCEPTABLE
 
-    header_name = 'app-version'
+    header_name = 'App-Version'
 
     if header_name not in request.headers:
         return not_acceptable_response

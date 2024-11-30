@@ -15,9 +15,5 @@ singletons.load_jaga_aksara_model()
 
 # * database is configured in the ./models/__init__.py
 
-@app.before_request
-def before_request():
-    return check_app_version_decorated()
-
 app.register_blueprint(web_bp)
 app.register_blueprint(api_bp)
