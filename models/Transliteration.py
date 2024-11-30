@@ -23,6 +23,7 @@ class Transliteration(get_db().Entity):
             "result": self.result,
             "impression": self.impression,
             "created_at": self.created_at.isoformat(),
+            "created_at_formatted": self.created_at.strftime('%Y-%m-%d'),
             "updated_at": self.updated_at.isoformat() if self.updated_at is not None else None,
 
             "user": self.user.to_json(),

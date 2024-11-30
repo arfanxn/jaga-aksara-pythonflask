@@ -64,8 +64,10 @@ class TransliterationController:
 
             if transliteration == None: 
                 return {'message': 'Data not found.'}, HTTPStatus.NOT_FOUND
-        
-            return transliteration.to_json(), HTTPStatus.OK
+            
+            jsonDict = transliteration.to_json();
+            del jsonDict['user']
+            return jsonDict, HTTPStatus.OK
 
     def download_photo (): 
         filename = request.args.get('file')
