@@ -69,8 +69,8 @@ class ArticleController:
 
             if article == None: 
                 return {'message': 'Data not found.'}, HTTPStatus.NOT_FOUND
-        
-            return article.to_json(), HTTPStatus.OK
+            
+            return  article.to_json().pop('author') , HTTPStatus.OK
 
     def download_thumbnail (): 
         filename = request.args.get('file')
