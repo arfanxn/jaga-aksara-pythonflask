@@ -50,7 +50,7 @@ class OtpController:
 
             clear_form()
             session['auth'] = {'id': user.id, 'user_id': user.id, 'level': user.level} # logged in user
-            return redirect('/'), HTTPStatus.OK
+            return redirect('/dashboard'), HTTPStatus.OK
 
     def handleResend():
         form = LoginForm(request.form) 

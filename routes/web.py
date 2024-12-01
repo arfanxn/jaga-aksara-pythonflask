@@ -11,6 +11,11 @@ web_bp = Blueprint('web', __name__, url_prefix='/')
 def index():
     return render_template('pages/dashboard.jinja')
 
+@web_bp.route('/dashboard')
+@authenticate
+def dashboard():
+    return render_template('pages/dashboard.jinja')
+
 @web_bp.route('/users/login')
 def login ():
     return UserController.login()
