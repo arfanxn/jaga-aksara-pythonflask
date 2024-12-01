@@ -1,0 +1,43 @@
+{% from 'macros/components.jinja' import text_field, btn, anchor_btn, alert, hidden_input %}
+
+{% extends "layouts/layout.jinja" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %} {{ super() }} {% endblock %}
+
+{% block content %}
+<main class="flex items-center justify-center h-screen">
+	<div class="flex flex-col gap-y-2 p-4 bg-yellow-500 border border-indigo-500 rounded-md shadow-lg text-white basis-1/3">
+		<h1 class="text-3xl font-bold">OTP Validate</h1>
+		<hr class="border border-white">
+		<form id="otp-validate-form" action="/otps/validate" method="POST" class="flex flex-col gap-y-2 items-end">
+
+			{{ text_field('country_code', 'Country Code', placeholder='62', value=form['country_code'], required=True, disabled=True) }}
+            {{ hidden_input('country_code', value=form['country_code']) }}
+
+			{{ text_field('phone', 'Phone', placeholder='777888999', value=form['phone'], required=True, disabled=True) }}
+            {{ hidden_input('phone', value=form['phone']) }}
+
+            {{ text_field('code', 'Code', placeholder='456789', value=form['code'], required=True, disabled=False) }}
+
+			{% if message != None %}
+                {% if status == 201 %}
+					{{ alert(message, type='success') }}
+				{% else %}
+                    {{ alert(message, type='error') }}
+				{% endif %}
+			{% endif %}
+
+            <div class="flex items-start w-full justify-between">
+                {{ anchor_btn('Back', '/admins/login') }}
+                {{ btn('Login') }}
+            </div>
+
+        </div>
+		</form>
+	</div>
+</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}<!-- blank footer on this page -->
