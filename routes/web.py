@@ -11,13 +11,18 @@ web_bp = Blueprint('web', __name__, url_prefix='/')
 def index():
     return render_template('pages/dashboard.jinja')
 
-@web_bp.route('/admins/login')
-def adminLogin ():
-    return UserController.adminLogin()
+@web_bp.route('/users/login')
+def login ():
+    return UserController.login()
 
-@web_bp.route('/admins/login', methods=(['POST']))
-def handleAdminLogin ():
-    return UserController.handleAdminLogin()
+@web_bp.route('/users/login', methods=(['POST']))
+def handleLogin ():
+    return UserController.handleLogin()
+
+@web_bp.route('/users/logout', methods=(['POST']))
+@authenticate
+def handleLogout ():
+    return UserController.handleLogout()
 
 @web_bp.route('/otps/validate')
 def validateOtp ():

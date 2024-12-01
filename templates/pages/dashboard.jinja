@@ -1,3 +1,5 @@
+{% from 'macros/components.jinja' import text_field, btn, alert %}
+
 {% extends "layouts/layout.jinja" %}
 
 {% block title %}Index{% endblock %}
@@ -13,4 +15,7 @@
 {% block content %}
 <h1 class="text-2xl text-teal-500 font-extrabold">Index</h1>
 <p class="important">Welcome on my awesome homepage.</p>
+<form action="/users/logout" method="POST">
+	{{ btn('Logout') }}
+</form>
 {% endblock %}

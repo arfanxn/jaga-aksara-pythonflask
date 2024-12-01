@@ -11,13 +11,13 @@ from pony.orm import db_session, commit
 
 class UserController:
 
-    def adminLogin(): 
+    def login(): 
         return render_template(
-            'pages/admin-login.jinja', 
+            'pages/login.jinja', 
             flashed_messages=get_flashed_messages()
         )
 
-    def handleAdminLogin():
+    def handleLogin():
         form = LoginForm(request.form) 
 
         if form.validate() == False: 
@@ -34,9 +34,11 @@ class UserController:
                 flash('The given phone number is not registered.', 'error')
                 return redirect(request.referrer, code=HTTPStatus.NOT_FOUND)
             
+            '''
             if user.level != UserLevelEnum.ADMIN.value: 
                 flash('Forbidden action.', 'error')
                 return redirect(request.referrer, code=HTTPStatus.FORBIDDEN)
+            '''
             
             otp = Otp(user=user)
             commit()
@@ -45,3 +47,6 @@ class UserController:
 
             return redirect('/otps/validate')
 
+    def handleLogout():
+        session.pop('auth', None)
+        return redirect('/users/login')

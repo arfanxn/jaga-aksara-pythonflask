@@ -31,7 +31,7 @@ def _authenticate_api():
 
 def _authenticate_web(): 
     def unauthorized_redirect(): 
-        return redirect('/admins/login', code=HTTPStatus.UNAUTHORIZED)
+        return redirect('/users/login', code=HTTPStatus.UNAUTHORIZED)
 
     if session.get('auth') is None:
         return unauthorized_redirect()

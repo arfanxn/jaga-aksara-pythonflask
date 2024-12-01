@@ -9,9 +9,9 @@
 {% block content %}
 <main class="flex items-center justify-center h-screen">
 	<div class="flex flex-col gap-y-2 p-4 bg-yellow-500 border border-indigo-500 rounded-md shadow-lg text-white basis-1/3">
-		<h1 class="text-3xl font-bold">Admin Login</h1>
+		<h1 class="text-3xl font-bold">Login</h1>
 		<hr class="border border-white">
-		<form action="/admins/login" method="POST" class="flex flex-col gap-y-2 items-end">
+		<form action="/users/login" method="POST" class="flex flex-col gap-y-2 items-end">
 			{{ text_field('country_code', 'Country Code', placeholder='62', required=True) }}
 			{{ text_field('phone', 'Phone', placeholder='777888999',required=True) }}
 

@@ -3,7 +3,7 @@ from flask import (
 )
 from forms import (OtpValidateForm, LoginForm)
 from utilities.request_helpers import fire_get_and_forget
-from utilities.form_helpers import get_error_message, get_flashed_messages, get_form
+from utilities.form_helpers import get_error_message, get_flashed_messages, get_form, clear_form
 from models import User, Otp
 from enums import OtpStatusEnum
 from http import HTTPStatus, client
@@ -12,7 +12,7 @@ from pony.orm import db_session, select, commit
 class OtpController:
     def validate():
         return render_template(
-            'pages/admin-otp-validate.jinja',
+            'pages/otp-validate.jinja',
             form=get_form(),
             flashed_messages=get_flashed_messages()
         )    
@@ -48,8 +48,8 @@ class OtpController:
             user, otp = result[0]  # Get the first (and only) result
             otp.status = OtpStatusEnum.USED.value
 
+            clear_form()
             session['auth'] = {'id': user.id, 'user_id': user.id, 'level': user.level} # logged in user
-
             return redirect('/'), HTTPStatus.OK
 
     def handleResend():
