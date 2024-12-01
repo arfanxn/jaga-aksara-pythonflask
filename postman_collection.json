@@ -120,9 +120,10 @@
 								"method": "GET",
 								"header": [
 									{
-										"key": "app-version",
-										"value": "2",
-										"type": "text"
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
 									}
 								],
 								"url": {
@@ -224,6 +225,9 @@
 					"item": [
 						{
 							"name": "Validate",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -242,7 +246,7 @@
 										},
 										{
 											"key": "code",
-											"value": "230484",
+											"value": "551673",
 											"type": "text"
 										}
 									]
@@ -459,7 +463,8 @@
 									"query": [
 										{
 											"key": "popular",
-											"value": null
+											"value": null,
+											"description": "enable to retrieve popular articles only"
 										}
 									]
 								}
@@ -676,6 +681,7 @@
 					]
 				}
 			],
+			"description": "Go to \"scripts\" -> \"Pre-request\" to set the \"App-Version\" header",
 			"auth": {
 				"type": "bearer",
 				"bearer": [
@@ -693,7 +699,10 @@
 						"type": "text/javascript",
 						"packages": {},
 						"exec": [
-							""
+							"pm.request.headers.add({",
+							"    key: 'App-Version',",
+							"    value: 1,",
+							"});"
 						]
 					}
 				},
@@ -721,29 +730,6 @@
 							"raw": "{{BASE_URL}}",
 							"host": [
 								"{{BASE_URL}}"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "System",
-			"item": [
-				{
-					"name": "Seed Database",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BASE_URL}}/systems/seed-database",
-							"host": [
-								"{{BASE_URL}}"
-							],
-							"path": [
-								"systems",
-								"seed-database"
 							]
 						}
 					},
