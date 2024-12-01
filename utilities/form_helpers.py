@@ -53,29 +53,3 @@ def get_flashed_messages():
         messages_by_category[category].append(message)
     
     return messages_by_category;
-
-def get_flashed_error_message():
-    """
-    Retrieve the first flashed error message, if available.
-
-    This function checks for flashed messages under the 'error' category
-    and returns the first message found. If there are no messages in the
-    'error' category, it will check the 'message' category instead. If
-    no messages are found in either category, it returns None.
-
-    :return: The first flashed error message or None if no error messages
-            are present.
-    :rtype: str or None
-    """
-    messages = get_flashed_messages().get('error', None) 
-    if (messages == None):  
-        messages = get_flashed_messages().get('message')
-
-    if (messages == None):
-        return None
-    elif (isinstance(messages, str)): 
-        return messages
-    elif (isinstance(messages[0], str)): 
-        return messages[0]
-    elif (isinstance(messages[0][0], str)): 
-        return messages[0][0]

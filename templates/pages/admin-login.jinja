@@ -15,9 +15,11 @@
 			{{ text_field('country_code', 'Country Code', placeholder='62', required=True) }}
 			{{ text_field('phone', 'Phone', placeholder='777888999',required=True) }}
 
-			{% if message != None %}
-				{{ alert(message, type='error') }}
-			{% endif %}
+			{% for category, messages in flashed_messages.items()  %}
+                {% for message in messages %}
+                    {{ alert(message, type=category) }}
+                {% endfor %}
+            {% endfor %}
 			
 			{{ btn('Login') }}
 		</form>

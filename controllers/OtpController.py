@@ -3,21 +3,18 @@ from flask import (
 )
 from forms import (OtpValidateForm, LoginForm)
 from utilities.request_helpers import fire_get_and_forget
-from utilities.form_helpers import get_error_message, get_flashed_error_message, get_form
+from utilities.form_helpers import get_error_message, get_flashed_messages, get_form
 from models import User, Otp
 from enums import OtpStatusEnum
 from http import HTTPStatus, client
 from pony.orm import db_session, select, commit
-import jwt
-import threading
-import requests
 
 class OtpController:
     def validate():
         return render_template(
             'pages/admin-otp-validate.jinja',
             form=get_form(),
-            message=get_flashed_error_message()
+            flashed_messages=get_flashed_messages()
         )    
 
     def handleValidate():
@@ -84,4 +81,5 @@ class OtpController:
                 pass
             
             flash('The otp code has been sent.', 'success')
+            print('flash executed')
             return redirect(back_location, code=HTTPStatus.CREATED)

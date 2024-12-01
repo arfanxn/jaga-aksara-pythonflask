@@ -2,7 +2,7 @@ from flask import (
     request, g, flash, render_template, redirect, session
 )
 from forms import (LoginForm)
-from utilities.form_helpers import get_error_message, get_flashed_error_message, set_form, get_form
+from utilities.form_helpers import get_error_message, get_flashed_messages, set_form, get_form
 from models import User, Otp
 from enums import UserLevelEnum
 from http import HTTPStatus
@@ -12,7 +12,10 @@ from pony.orm import db_session, commit
 class UserController:
 
     def adminLogin(): 
-        return render_template('pages/admin-login.jinja', message=get_flashed_error_message())
+        return render_template(
+            'pages/admin-login.jinja', 
+            flashed_messages=get_flashed_messages()
+        )
 
     def handleAdminLogin():
         form = LoginForm(request.form) 

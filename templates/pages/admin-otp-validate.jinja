@@ -21,21 +21,26 @@
 
             {{ text_field('code', 'Code', placeholder='456789', value=form['code'], required=True, disabled=False) }}
 
-			{% if message != None %}
-                {% if status == 201 %}
-					{{ alert(message, type='success') }}
-				{% else %}
-                    {{ alert(message, type='error') }}
-				{% endif %}
-			{% endif %}
+            {% for category, messages in flashed_messages.items()  %}
+                {% for message in messages %}
+                    {{ alert(message, type=category) }}
+                {% endfor %}
+            {% endfor %}
 
-            <div class="flex items-start w-full justify-between">
-                {{ anchor_btn('Back', '/admins/login') }}
-                {{ btn('Login') }}
-            </div>
-
-        </div>
 		</form>
+
+        <form id="otp-resend-form" action="/otps/resend" method="POST" class="hidden">
+            {{ hidden_input('country_code', value=form['country_code']) }}
+            {{ hidden_input('phone', value=form['phone']) }}
+		</form>
+
+        <div class="flex items-start w-full justify-between">
+            {{ anchor_btn('Back', '/admins/login') }}
+            <div class="flex flex-row gap-x-1">
+                {{ btn('Resend', adds='form="otp-resend-form"') }}
+                {{ btn('Login', adds='form="otp-validate-form"') }}
+            </div>
+        </div>
 	</div>
 </main>
 {% endblock %}
