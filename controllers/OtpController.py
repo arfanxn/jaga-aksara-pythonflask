@@ -4,7 +4,6 @@ from flask import (
 from forms import (OtpValidateForm, LoginForm)
 from utilities.request_helpers import fire_get_and_forget
 from utilities.form_helpers import get_error_message, get_flashed_error_message, get_form
-from utilities.url_helpers import verify_url_signature
 from models import User, Otp
 from enums import OtpStatusEnum
 from http import HTTPStatus, client

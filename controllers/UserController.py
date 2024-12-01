@@ -3,7 +3,6 @@ from flask import (
 )
 from forms import (LoginForm)
 from utilities.form_helpers import get_error_message, get_flashed_error_message, set_form, get_form
-from utilities.url_helpers import dump_url_signature
 from models import User, Otp
 from enums import UserLevelEnum
 from http import HTTPStatus
