@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import request, g,abort
+from flask import request, g, abort, session, redirect
 from flask import current_app
 from models import User
 from http import HTTPStatus
@@ -7,9 +7,8 @@ from pony.orm import db_session
 
 import jwt
 import jwt.exceptions
-import db
 
-def authenticate_decorated(*args, **kwargs):
+def _authenticate_api(): 
     unauthorized_response = {
             "message": "Unauthorized action.",
             # "status": HTTPStatus.UNAUTHORIZED
@@ -29,6 +28,26 @@ def authenticate_decorated(*args, **kwargs):
             return unauthorized_response
         
         g.user = user
+
+def _authenticate_web(): 
+    def unauthorized_redirect(): 
+        return redirect('/admins/login', code=HTTPStatus.UNAUTHORIZED)
+
+    if session.get('auth') is None:
+        return unauthorized_redirect()
+    
+    with db_session:
+        user = User.get(lambda u: u.id == session.get('auth')['user_id'])
+        if user is None:
+            return unauthorized_redirect()
+        
+        g.user = user
+
+def authenticate_decorated(*args, **kwargs):
+    if 'api' in request.path:
+        return _authenticate_api()
+    else:
+        return _authenticate_web()
 
 def authenticate(f):
     """
