@@ -16,7 +16,7 @@ def index():
 def dashboard():
     return render_template('pages/dashboard.jinja')
 
-@web_bp.route('/users/login')
+@web_bp.route('/users/login') 
 def login ():
     return UserController.login()
 
