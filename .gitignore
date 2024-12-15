@@ -13,3 +13,4 @@ storages/*
 contents/*
 images/*
 node_modules/
+.DS_Store
